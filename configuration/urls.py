@@ -21,6 +21,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/', include('blogapp.urls')),
+    path('markdownx/', include('markdownx.urls')),
+
     
     
 ]
