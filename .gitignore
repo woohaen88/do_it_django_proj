@@ -3,3 +3,4 @@ blogapp/migrations
 configuration/__pycache__
 db.sqlite3
 blogapp/__pycache__
+_media
