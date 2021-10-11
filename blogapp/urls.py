@@ -1,5 +1,5 @@
 from django.urls.conf import include, path
-from .views import PostListView, PostDetailView, category_page, tag_page, PostCreate, PostUpdate
+from .views import PostListView, PostDetailView, category_page, tag_page, PostCreate, PostUpdate, new_comment
 
 
 app_name = 'blogapp'
@@ -11,4 +11,5 @@ urlpatterns = [
     path('category/<str:slug>/', category_page, name='category'),
     path('list/', PostListView.as_view(), name='list'),
     path('<int:pk>/', PostDetailView.as_view(), name='detail'),    
+    path('<int:pk>/new_comment/', new_comment, name='new_comment'),    
 ]
