@@ -1,9 +1,24 @@
-from typing import List
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
 # Create your views here.
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category, Tag
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    template_name = 'blogapp/create.html'
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+    success_url = reverse_lazy('blogapp:list')
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/blog/')
 
 class PostListView(ListView):
     model = Post
