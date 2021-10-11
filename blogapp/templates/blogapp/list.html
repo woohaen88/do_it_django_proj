@@ -29,6 +29,14 @@
                     {% endif %}
 
                     <p class="card-text">{{ p.content | truncatewords:45 }}</p>
+                    {% if p.tags.exists %}
+                    {% for tag in p.tags.iterator %}
+                    <a href="{{ tag.get_absolute_url }}"><span class="badge badge-pill badge-light">{{ tag }}</span></a>
+                    {% endfor %}
+                    <br />
+                    <br />
+                    {% endif %}
+
                     <!-- <a href="{{ p.get_absolute_url }}" class="btn btn-primary">Read More &rarr;</a> -->
                     <a href="{% url 'blogapp:detail'  pk=p.pk %}" class="btn btn-primary">Read More &rarr;</a>
                 </div>
