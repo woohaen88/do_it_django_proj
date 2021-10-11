@@ -68,7 +68,11 @@
             {% include 'detail/comment_form.html' %}
 
             <!-- Single Comment -->
-            {% include 'detail/single_comment.html' %}
+            {% if post.comment_set.exists %}
+            {% for comment in post.comment_set.iterator %}
+            {% include 'detail/single_comment.html' with comment=comment%}
+            {% endfor %}
+            {% endif %}
 
             <!-- Comment with nested comments -->
             {% include 'detail/comment.html' %}
