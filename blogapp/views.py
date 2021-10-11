@@ -1,10 +1,30 @@
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 # Create your views here.
 from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic.edit import UpdateView
 from .models import Post, Category, Tag
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+
+
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    template_name = 'blogapp/update.html'
+    model = Post
+    fields = ['title', 'hook_text', 'content', 'head_image', 'file_upload', 'category']
+
+    def get_success_url(self):
+        return reverse('blogapp:detail', kwargs={'pk' : self.object.pk})
+
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
 
 class PostCreate(LoginRequiredMixin, CreateView):
     template_name = 'blogapp/create.html'
