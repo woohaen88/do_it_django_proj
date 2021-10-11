@@ -1,5 +1,6 @@
 from django.db import models
 import os
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Post(models.Model):
@@ -13,6 +14,8 @@ class Post(models.Model):
     
     head_image = models.ImageField(upload_to='blog/images/%y/%m/%d/', blank=True)
     file_upload = models.FileField(upload_to='blog/files/%y/%m/%d/', blank=True)
+
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     
 
     def __str__(self):
