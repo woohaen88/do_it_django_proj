@@ -5,7 +5,10 @@
 <div class="container my-3">
     <div class="row">
         <div class="col-md-8 col-lg-9">
-            <h1>Blog {% if category %}<span class="badge badge-secondary">{{ category }}</span>{% endif %}</h1>
+            <h1>Blog {% if category %}<span class="badge badge-secondary">{{ category }}</span>{% endif %}
+                {% if tag %}<span class="badge badge-light">{{ tag }}
+                    ({{ tag.post_set.count }})</span>{% endif %}
+            </h1>
 
             {% for p in post_list %}
 
